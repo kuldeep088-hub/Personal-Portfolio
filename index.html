@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kuldeep Sharma — Digital Marketing & Creative Specialist</title>
+  <meta name="description" content="Helping businesses grow through creative design, content systems, and performance-driven marketing." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #000000;
+      --surface:    #0a0a0f;
+      --surface2:   #111118;
+      --border:     #1e1e2e;
+      --violet:     #8b5cf6;
+      --purple:     #7c3aed;
+      --blue:       #2563eb;
+      --cyan:       #06b6d4;
+      --tp:         #f8fafc;
+      --ts:         #94a3b8;
+      --tm:         #475569;
+      --grad:       linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--tp);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--surface); }
+    ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 3px; }
+    ::selection { background: rgba(124,58,237,0.3); color: var(--tp); }
+
+    /* ── UTILITIES ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+    .mono { font-family: 'Fira Code', monospace; }
+    .section-label { font-family: 'Fira Code', monospace; color: var(--violet); font-size: .8rem; }
+    .section-title { font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 700; color: var(--tp); margin-top: .4rem; }
+    section { padding: 5rem 0; }
+
+    /* ── FADE-IN ANIMATION ── */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-left { opacity: 0; transform: translateX(-30px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-left.visible { opacity: 1; transform: translateX(0); }
+    .fade-right { opacity: 0; transform: translateX(30px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ── NAVBAR ── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      transition: background .3s, border-color .3s;
+      border-bottom: 1px solid transparent;
+    }
+    header.scrolled {
+      background: rgba(0,0,0,.8);
+      backdrop-filter: blur(12px);
+      border-color: var(--border);
+    }
+    nav {
+      max-width: 1100px; margin: 0 auto; padding: 0 1.5rem;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: .4rem; text-decoration: none; }
+    .nav-logo .ks { font-family: 'Fira Code', monospace; color: var(--violet); font-weight: 700; font-size: 1.1rem; }
+    .nav-logo .name { font-weight: 600; color: var(--tp); transition: color .2s; }
+    .nav-logo:hover .name { color: var(--violet); }
+
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a {
+      text-decoration: none; font-size: .875rem; color: var(--ts);
+      transition: color .2s; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 1px; background: var(--violet); transition: width .3s;
+    }
+    .nav-links a:hover { color: var(--tp); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .badge-avail {
+      display: flex; align-items: center; gap: .4rem;
+      font-size: .7rem; color: #4ade80;
+      border: 1px solid rgba(74,222,128,.3); background: rgba(74,222,128,.08);
+      padding: .3rem .75rem; border-radius: 100px;
+    }
+    .badge-avail .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #4ade80; animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.4} }
+
+    .nav-icon { color: var(--ts); text-decoration: none; transition: color .2s; display: flex; }
+    .nav-icon:hover { color: var(--violet); }
+    .nav-icon svg { width: 18px; height: 18px; }
+
+    .hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--ts); padding: .25rem; }
+    .hamburger svg { width: 22px; height: 22px; }
+
+    .mobile-menu {
+      display: none; flex-direction: column; gap: 1rem;
+      padding: 1rem 1.5rem 1.5rem;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { text-decoration: none; color: var(--ts); transition: color .2s; padding: .25rem 0; }
+    .mobile-menu a:hover { color: var(--tp); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+      background: var(--bg); position: relative; overflow: hidden; padding: 6rem 0 4rem;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(124,58,237,.15) 0%, rgba(37,99,235,.08) 40%, transparent 70%);
+      pointer-events: none;
+    }
+    .blob {
+      position: absolute; border-radius: 50%; pointer-events: none;
+      animation: blobPulse 4s ease-in-out infinite;
+    }
+    .blob-1 { width: 380px; height: 380px; top: 20%; right: 20%; background: rgba(124,58,237,.05); filter: blur(60px); }
+    .blob-2 { width: 260px; height: 260px; bottom: 20%; left: 15%; background: rgba(37,99,235,.05); filter: blur(60px); animation-delay: 2s; }
+    @keyframes blobPulse { 0%,100%{opacity:.6}50%{opacity:1} }
+
+    .hero-content { position: relative; z-index: 1; max-width: 760px; }
+    .hero-greeting { font-family: 'Fira Code', monospace; color: var(--violet); font-size: .875rem; margin-bottom: 1rem; }
+    .hero-name {
+      font-size: clamp(2.4rem, 6vw, 3.8rem); font-weight: 800; line-height: 1.15;
+      margin-bottom: 1rem; color: var(--tp);
+    }
+    .hero-name span { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-role { font-size: clamp(1.1rem, 2.5vw, 1.4rem); color: var(--ts); margin-bottom: 1.5rem; min-height: 2rem; }
+    .hero-role .typed { color: var(--violet); }
+    .cursor { display: inline-block; width: 2px; height: 1.1em; background: var(--violet); margin-left: 2px; animation: blink .7s steps(1) infinite; vertical-align: text-bottom; }
+    @keyframes blink { 0%,100%{opacity:1}50%{opacity:0} }
+
+    .hero-desc { color: var(--ts); font-size: 1.05rem; line-height: 1.75; margin-bottom: 2.5rem; max-width: 600px; }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3.5rem; }
+    .btn-primary {
+      padding: .75rem 1.5rem; border-radius: 8px;
+      background: var(--grad); color: #fff; font-weight: 500; font-size: .9rem;
+      text-decoration: none; transition: opacity .2s;
+      box-shadow: 0 0 30px rgba(124,58,237,.3);
+    }
+    .btn-primary:hover { opacity: .85; }
+    .btn-outline {
+      padding: .75rem 1.5rem; border-radius: 8px;
+      border: 1px solid var(--border); color: var(--tp); font-weight: 500; font-size: .9rem;
+      text-decoration: none; transition: border-color .2s, color .2s;
+    }
+    .btn-outline:hover { border-color: var(--violet); color: var(--violet); }
+
+    .hero-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+    .stat-val { font-size: 1.8rem; font-weight: 800; color: var(--tp); }
+    .stat-label { font-size: .75rem; color: var(--ts); margin-top: .15rem; }
+
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .4rem;
+      color: var(--tm); font-family: 'Fira Code', monospace; font-size: .7rem;
+      animation: scrollHint 1.5s ease-in-out infinite;
+    }
+    @keyframes scrollHint { 0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)} }
+    .scroll-hint svg { width: 16px; height: 16px; }
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; }
+    .info-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+    .info-row { display: flex; align-items: center; gap: .75rem; color: var(--ts); font-size: .9rem; padding: .5rem 0; }
+    .info-row:not(:last-child) { border-bottom: 1px solid var(--border); }
+    .info-row svg { width: 16px; height: 16px; color: var(--violet); flex-shrink: 0; }
+    .green-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; display: inline-block; margin-left: .4rem; }
+
+    .interests-wrap { margin-top: 1.5rem; }
+    .interests-label { font-family: 'Fira Code', monospace; color: var(--violet); font-size: .8rem; margin-bottom: .75rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .tag {
+      padding: .35rem .8rem; font-size: .75rem; border-radius: 100px;
+      background: var(--surface); border: 1px solid var(--border); color: var(--ts);
+      transition: border-color .2s, color .2s; cursor: default;
+    }
+    .tag:hover { border-color: var(--violet); color: var(--violet); }
+
+    .about-bio { color: var(--ts); line-height: 1.8; }
+    .about-bio p { margin-bottom: 1rem; }
+    .about-bio p:last-child { margin-bottom: 0; }
+    .about-bio strong { color: var(--tp); font-weight: 500; }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--surface); }
+    .exp-timeline { margin-top: 3rem; padding-left: 2rem; border-left: 1px solid var(--border); position: relative; }
+    .exp-timeline::before {
+      content: ''; position: absolute; left: -6px; top: 4px;
+      width: 12px; height: 12px; border-radius: 50%;
+      border: 2px solid var(--violet); background: var(--surface);
+    }
+    .exp-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; transition: border-color .2s; }
+    .exp-card:hover { border-color: rgba(139,92,246,.5); }
+    .exp-header { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; }
+    .exp-role { font-size: 1.05rem; font-weight: 600; color: var(--tp); margin-bottom: .5rem; }
+    .exp-meta { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .exp-meta-item { display: flex; align-items: center; gap: .4rem; font-size: .8rem; color: var(--ts); }
+    .exp-meta-item svg { width: 13px; height: 13px; color: var(--violet); }
+    .exp-badge {
+      display: flex; align-items: center; gap: .35rem;
+      font-size: .8rem; color: var(--violet);
+      border: 1px solid rgba(139,92,246,.3); background: rgba(139,92,246,.1);
+      padding: .35rem .9rem; border-radius: 100px; white-space: nowrap;
+    }
+    .exp-badge svg { width: 12px; height: 12px; }
+    .exp-list { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .exp-list li { display: flex; align-items: flex-start; gap: .75rem; font-size: .875rem; color: var(--ts); }
+    .exp-list li::before { content: '▹'; color: var(--violet); flex-shrink: 0; margin-top: .15rem; }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg); }
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .skill-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+    .skill-card-title { font-size: .95rem; font-weight: 600; color: var(--tp); padding-bottom: .75rem; border-bottom: 1px solid var(--border); margin-bottom: 1.25rem; }
+    .skill-item { margin-bottom: 1rem; }
+    .skill-item:last-child { margin-bottom: 0; }
+    .skill-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: .4rem; }
+    .skill-name { font-size: .825rem; color: var(--ts); }
+    .skill-pct { font-family: 'Fira Code', monospace; font-size: .7rem; color: var(--violet); }
+    .skill-track { height: 5px; background: var(--surface2); border-radius: 100px; overflow: hidden; }
+    .skill-fill {
+      height: 100%; border-radius: 100px; width: 0;
+      background: var(--grad); transition: width 1s ease;
+    }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--surface); }
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 3rem; }
+    .project-card {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+      padding: 1.5rem; transition: border-color .2s, box-shadow .2s;
+    }
+    .project-card:hover { border-color: rgba(139,92,246,.5); box-shadow: 0 0 20px rgba(124,58,237,.12); }
+    .project-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: .75rem; }
+    .project-cat {
+      font-family: 'Fira Code', monospace; font-size: .7rem; color: var(--violet);
+      border: 1px solid rgba(139,92,246,.3); background: rgba(139,92,246,.1);
+      padding: .25rem .7rem; border-radius: 100px;
+    }
+    .project-card:hover .ext-icon { color: var(--violet); }
+    .ext-icon { color: var(--tm); transition: color .2s; }
+    .ext-icon svg { width: 15px; height: 15px; }
+    .project-title { font-size: 1rem; font-weight: 600; color: var(--tp); margin-bottom: .5rem; }
+    .project-desc { font-size: .825rem; color: var(--ts); line-height: 1.65; margin-bottom: 1rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .project-tag { font-size: .7rem; color: var(--tm); background: var(--surface); padding: .2rem .55rem; border-radius: 4px; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; }
+    .contact-subtitle { color: var(--ts); margin-top: .75rem; max-width: 420px; line-height: 1.7; }
+    .contact-info { display: flex; flex-direction: column; gap: 1.25rem; }
+    .contact-row { display: flex; align-items: center; gap: 1rem; }
+    .contact-icon {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: rgba(139,92,246,.1); border: 1px solid rgba(139,92,246,.2);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .contact-icon svg { width: 17px; height: 17px; color: var(--violet); }
+    .contact-label { font-size: .7rem; color: var(--tm); margin-bottom: .2rem; }
+    .contact-val { font-size: .875rem; color: var(--ts); text-decoration: none; transition: color .2s; }
+    .contact-val:hover { color: var(--tp); }
+    .social-links { display: flex; gap: .75rem; margin-top: .5rem; }
+    .social-btn {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; color: var(--ts); transition: border-color .2s, color .2s;
+    }
+    .social-btn:hover { border-color: var(--violet); color: var(--violet); }
+    .social-btn svg { width: 17px; height: 17px; }
+
+    .contact-form { display: flex; flex-direction: column; gap: .75rem; }
+    .form-input {
+      width: 100%; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: .75rem 1rem; color: var(--tp); font-size: .875rem;
+      font-family: inherit; outline: none; transition: border-color .2s;
+    }
+    .form-input::placeholder { color: var(--tm); }
+    .form-input:focus { border-color: var(--violet); }
+    textarea.form-input { resize: none; }
+    .form-btn {
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      width: 100%; background: var(--grad); color: #fff;
+      border: none; border-radius: 8px; padding: .85rem 1rem;
+      font-size: .9rem; font-weight: 500; font-family: inherit;
+      cursor: pointer; transition: opacity .2s;
+    }
+    .form-btn:hover { opacity: .85; }
+    .form-btn svg { width: 15px; height: 15px; }
+    .form-msg { text-align: center; font-size: .825rem; padding: .25rem 0; }
+    .form-msg.success { color: #4ade80; }
+    .form-msg.error { color: #f87171; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 0; border-top: 1px solid var(--border);
+      background: var(--bg); text-align: center;
+    }
+    footer p { font-size: .825rem; color: var(--tm); display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: .35rem; }
+    footer span { color: var(--ts); }
+    footer svg { width: 13px; height: 13px; color: #f87171; display: inline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 700px) {
+      .nav-links, .nav-right { display: none; }
+      .hamburger { display: block; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .skills-grid, .projects-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      section { padding: 3.5rem 0; }
+      .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<header id="navbar">
+  <nav>
+    <a href="#" class="nav-logo">
+      <span class="ks">KS/</span>
+      <span class="name">Kuldeep</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <div class="nav-right">
+      <span class="badge-avail">
+        <span class="dot"></span>
+        Available for opportunities
+      </span>
+      <a href="https://www.linkedin.com/in/kuldeepsharma09/" target="_blank" rel="noopener noreferrer" class="nav-icon" title="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+        </svg>
+      </a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <svg id="ham-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg id="ham-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#about" onclick="closeMenu()">About</a>
+    <a href="#experience" onclick="closeMenu()">Experience</a>
+    <a href="#skills" onclick="closeMenu()">Skills</a>
+    <a href="#projects" onclick="closeMenu()">Projects</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
+    <span class="badge-avail" style="width:fit-content">
+      <span class="dot"></span>Available for opportunities
+    </span>
+  </div>
+</header>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-greeting mono">Hello, World! 👋</div>
+      <h1 class="hero-name">Hi, I'm <span>Kuldeep Sharma</span></h1>
+      <div class="hero-role">
+        <span class="typed" id="typed-text"></span><span class="cursor"></span>
+      </div>
+      <p class="hero-desc">
+        Helping businesses grow through creative design, content systems,
+        and performance-driven marketing. Based in Jaipur, India.
+      </p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="#contact" class="btn-outline">Get In Touch</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-val">10+</div><div class="stat-label">Clients Helped</div></div>
+        <div><div class="stat-val">20+</div><div class="stat-label">Campaigns Managed</div></div>
+        <div><div class="stat-val">500+</div><div class="stat-label">Content Pieces Created</div></div>
+        <div><div class="stat-val">1+</div><div class="stat-label">Years Experience</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+</section>
+
+<!-- ══════════════ ABOUT ══════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">01. about</div>
+      <h2 class="section-title">About Me</h2>
+    </div>
+    <div class="about-grid">
+      <div class="fade-left" style="transition-delay:.1s">
+        <div class="info-card">
+          <div class="info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Jaipur, Rajasthan, India
+          </div>
+          <div class="info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+            Open to Opportunities <span class="green-dot"></span>
+          </div>
+          <div class="info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            Bachelor's Degree (2021–2025)
+          </div>
+          <div class="info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            <a href="https://www.linkedin.com/in/kuldeepsharma09/" target="_blank" rel="noopener noreferrer" style="color:var(--ts);text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--violet)'" onmouseout="this.style.color='var(--ts)'">linkedin.com/in/kuldeepsharma09</a>
+          </div>
+        </div>
+        <div class="interests-wrap">
+          <div class="interests-label">Interests</div>
+          <div class="tags">
+            <span class="tag">Meta Advertising</span>
+            <span class="tag">Creative Design</span>
+            <span class="tag">Brand Strategy</span>
+            <span class="tag">Content Marketing</span>
+            <span class="tag">Video Production</span>
+            <span class="tag">Business Growth</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-bio fade-right" style="transition-delay:.2s">
+        <p>I'm a <strong>Digital Marketing and Growth Specialist</strong> focused on helping businesses and personal brands build a strong online presence through creative, data-driven strategies.</p>
+        <p>With expertise in <strong>visual content creation</strong>, <strong>Meta advertising management</strong>, and <strong>content strategy systems</strong>, I help brands communicate their value effectively and reach the right audience.</p>
+        <p>My goal is helping brands grow faster by combining creativity with data-driven approaches — whether through compelling ad creatives, strategic content calendars, or optimized ad campaigns.</p>
+        <p>Currently freelancing and always open to exciting collaborations, projects, or conversations about growth strategy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ EXPERIENCE ══════════════ -->
+<section id="experience">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">02. experience</div>
+      <h2 class="section-title">Work Experience</h2>
+    </div>
+    <div class="exp-timeline fade-up" style="transition-delay:.2s">
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">Freelance Digital Marketing & Creative Specialist</div>
+            <div class="exp-meta">
+              <span class="exp-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+                Self-Employed
+              </span>
+              <span class="exp-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Jaipur, Rajasthan | Remote
+              </span>
+            </div>
+          </div>
+          <span class="exp-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Jul 2024 — Present
+          </span>
+        </div>
+        <ul class="exp-list">
+          <li>Strengthening brand online presence through creative design and visual content</li>
+          <li>Designing Instagram posts, ad creatives, and brand assets for multiple clients</li>
+          <li>Managing Facebook & Instagram ad campaigns optimized for maximum ROI</li>
+          <li>Video editing for Reels, Shorts, and promotional content</li>
+          <li>Social media copywriting, ad copy, and brand content writing</li>
+          <li>Building end-to-end content systems for consistent publishing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ SKILLS ══════════════ -->
+<section id="skills">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">03. skills</div>
+      <h2 class="section-title">Skills & Expertise</h2>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-card fade-up" style="transition-delay:.1s">
+        <div class="skill-card-title">Creative & Design</div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Graphic Design</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" data-width="90"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Visual Content</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" data-width="90"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Creative Branding</span><span class="skill-pct">88%</span></div><div class="skill-track"><div class="skill-fill" data-width="88"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Ad Creatives</span><span class="skill-pct">87%</span></div><div class="skill-track"><div class="skill-fill" data-width="87"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Video Editing</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" data-width="85"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Reels / Shorts</span><span class="skill-pct">83%</span></div><div class="skill-track"><div class="skill-fill" data-width="83"></div></div></div>
+      </div>
+
+      <div class="skill-card fade-up" style="transition-delay:.2s">
+        <div class="skill-card-title">Marketing & Ads</div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Digital Marketing</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" data-width="90"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Meta Ads Management</span><span class="skill-pct">88%</span></div><div class="skill-track"><div class="skill-fill" data-width="88"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Lead Generation</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" data-width="85"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Performance Marketing</span><span class="skill-pct">84%</span></div><div class="skill-track"><div class="skill-fill" data-width="84"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Campaign Optimization</span><span class="skill-pct">82%</span></div><div class="skill-track"><div class="skill-fill" data-width="82"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Ad Copywriting</span><span class="skill-pct">80%</span></div><div class="skill-track"><div class="skill-fill" data-width="80"></div></div></div>
+      </div>
+
+      <div class="skill-card fade-up" style="transition-delay:.3s">
+        <div class="skill-card-title">Content & Strategy</div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Social Media Strategy</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" data-width="90"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Content Writing</span><span class="skill-pct">88%</span></div><div class="skill-track"><div class="skill-fill" data-width="88"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Content Planning</span><span class="skill-pct">87%</span></div><div class="skill-track"><div class="skill-fill" data-width="87"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Brand Messaging</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" data-width="85"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Audience Growth</span><span class="skill-pct">83%</span></div><div class="skill-track"><div class="skill-fill" data-width="83"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Analytics & Insights</span><span class="skill-pct">78%</span></div><div class="skill-track"><div class="skill-fill" data-width="78"></div></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ PROJECTS ══════════════ -->
+<section id="projects">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">04. projects</div>
+      <h2 class="section-title">Featured Projects</h2>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card fade-up" style="transition-delay:.1s">
+        <div class="project-top">
+          <span class="project-cat">Performance Marketing</span>
+          <span class="ext-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+        </div>
+        <div class="project-title">Digital Growth Campaigns</div>
+        <p class="project-desc">Designed and executed end-to-end digital growth campaigns for local businesses and personal brands, combining Meta Ads strategy with creative content for maximum visibility and lead generation.</p>
+        <div class="project-tags">
+          <span class="project-tag">Meta Ads</span>
+          <span class="project-tag">Facebook Ads</span>
+          <span class="project-tag">Campaign Strategy</span>
+          <span class="project-tag">Analytics</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" style="transition-delay:.2s">
+        <div class="project-top">
+          <span class="project-cat">Creative Design</span>
+          <span class="ext-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+        </div>
+        <div class="project-title">Creative Branding Projects</div>
+        <p class="project-desc">Developed complete visual brand identities for startups and small businesses — including logos, color systems, social media templates, and ad creatives to establish strong brand presence.</p>
+        <div class="project-tags">
+          <span class="project-tag">Logo Design</span>
+          <span class="project-tag">Brand Identity</span>
+          <span class="project-tag">Visual Design</span>
+          <span class="project-tag">Canva / Adobe</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" style="transition-delay:.3s">
+        <div class="project-top">
+          <span class="project-cat">Content Strategy</span>
+          <span class="ext-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+        </div>
+        <div class="project-title">Social Media Marketing Systems</div>
+        <p class="project-desc">Built consistent content systems for brands — content calendars, post templates, caption frameworks, and publishing workflows for sustained online presence.</p>
+        <div class="project-tags">
+          <span class="project-tag">Content Planning</span>
+          <span class="project-tag">Social Media</span>
+          <span class="project-tag">Content Writing</span>
+          <span class="project-tag">Scheduling</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" style="transition-delay:.4s">
+        <div class="project-top">
+          <span class="project-cat">Performance Marketing</span>
+          <span class="ext-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+        </div>
+        <div class="project-title">Meta Ads Lead Generation</div>
+        <p class="project-desc">Set up and optimized Meta Ads lead generation campaigns for local businesses, creating targeted ad funnels that reduced cost-per-lead and improved overall conversion rates.</p>
+        <div class="project-tags">
+          <span class="project-tag">Meta Ads</span>
+          <span class="project-tag">Lead Generation</span>
+          <span class="project-tag">Audience Targeting</span>
+          <span class="project-tag">Funnel Strategy</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CONTACT ══════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">05. contact</div>
+      <h2 class="section-title">Get In Touch</h2>
+      <p class="contact-subtitle">I'm always open to new opportunities, collaborations, or just a friendly chat about growth strategy.</p>
+    </div>
+    <div class="contact-grid" style="margin-top:2.5rem">
+
+      <div class="contact-info fade-left" style="transition-delay:.1s">
+        <div class="contact-row">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="contact-label">Email</div>
+            <a href="mailto:kuldeepsharma@example.com" class="contact-val">kuldeepsharma@example.com</a>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="contact-label">Location</div>
+            <span class="contact-val">Jaipur, Rajasthan, India</span>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/kuldeepsharma09/" target="_blank" rel="noopener noreferrer" class="social-btn" title="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://github.com/kuldeep088-hub" target="_blank" rel="noopener noreferrer" class="social-btn" title="GitHub">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form fade-right" style="transition-delay:.2s" id="contact-form">
+        <input type="text" class="form-input" placeholder="Your Name" required />
+        <input type="email" class="form-input" placeholder="Your Email" required />
+        <textarea class="form-input" rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit" class="form-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Send Message
+        </button>
+        <div class="form-msg" id="form-msg"></div>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="container">
+    <p>
+      Designed &amp; Built by <span>Kuldeep Sharma</span>
+      &nbsp;·&nbsp; Made with
+      <svg viewBox="0 0 24 24" fill="#f87171" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      &nbsp;·&nbsp; © <span id="year"></span>
+    </p>
+  </div>
+</footer>
+
+<script>
+  // ── Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ── Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // ── Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const hamOpen = document.getElementById('ham-open');
+  const hamClose = document.getElementById('ham-close');
+  let menuOpen = false;
+
+  hamburger.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileMenu.classList.toggle('open', menuOpen);
+    hamOpen.style.display = menuOpen ? 'none' : 'block';
+    hamClose.style.display = menuOpen ? 'block' : 'none';
+  });
+
+  function closeMenu() {
+    menuOpen = false;
+    mobileMenu.classList.remove('open');
+    hamOpen.style.display = 'block';
+    hamClose.style.display = 'none';
+  }
+
+  // ── Typing animation
+  const roles = [
+    'Digital Marketing Specialist',
+    'Creative Design Expert',
+    'Meta Ads Manager',
+    'Content Strategist',
+  ];
+  let roleIdx = 0, charIdx = 0, deleting = false;
+  const typedEl = document.getElementById('typed-text');
+
+  function type() {
+    const current = roles[roleIdx];
+    if (!deleting) {
+      typedEl.textContent = current.slice(0, ++charIdx);
+      if (charIdx === current.length) { deleting = true; setTimeout(type, 1800); return; }
+    } else {
+      typedEl.textContent = current.slice(0, --charIdx);
+      if (charIdx === 0) { deleting = false; roleIdx = (roleIdx + 1) % roles.length; }
+    }
+    setTimeout(type, deleting ? 40 : 60);
+  }
+  type();
+
+  // ── Scroll fade-in
+  const fadeEls = document.querySelectorAll('.fade-up, .fade-left, .fade-right');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  fadeEls.forEach(el => observer.observe(el));
+
+  // ── Skill bar animation
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.skill-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+        skillObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.skill-card').forEach(c => skillObserver.observe(c));
+
+  // ── Contact form
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.form-btn');
+    const msg = document.getElementById('form-msg');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:15px;height:15px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Message';
+      btn.disabled = false;
+      msg.textContent = 'Message sent successfully!';
+      msg.className = 'form-msg success';
+      this.reset();
+      setTimeout(() => { msg.textContent = ''; msg.className = 'form-msg'; }, 4000);
+    }, 1000);
+  });
+</script>
+</body>
+</html>
